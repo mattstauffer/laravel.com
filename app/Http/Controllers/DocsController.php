@@ -1,6 +1,11 @@
 <?php namespace App\Http\Controllers;
 
+use App;
 use App\Documentation;
+use Exception;
+use Illuminate\Support\Facades\Log;
+use Input;
+use Redirect;
 
 class DocsController extends Controller {
 
@@ -64,15 +69,21 @@ class DocsController extends Controller {
 	 */
 	public function search($version)
 	{
-		if (! $keyword = \Input::get('keyword'))
+		if (! $keyword = Input::get('keyword'))
 		{
-			return \Redirect::to('docs/' . $version);
+			return Redirect::to('docs/' . $version);
 		}
 
 		/** @var App\Services\Documentation\Searcher $client */
-		$client = \App::make('App\Services\Documentation\Searcher');
+		$client = App::make('App\Services\Documentation\Searcher');
 
-		$hits = $client->searchForTerm($version, $keyword);
+		try {
+			$hits = $client->searchForTerm($version, $keyword);
+		} catch (Exception $e) {
+			Log::error($e);
+
+			return Redirect::to('docs/' . $version);
+		}
 
 		$content = view('partials.search-results', [
 			'hits' => $hits,
