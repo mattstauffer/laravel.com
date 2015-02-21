@@ -3,15 +3,15 @@
 use Elasticsearch\Client;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 
-class Searcher {
-
+class Searcher
+{
 	/**
 	 * @var Client
 	 */
 	private $client;
 
 	public function __construct(Client $client)
-    {
+	{
 		$this->client = $client;
 	}
 
@@ -40,7 +40,6 @@ class Searcher {
 		}
 
 		// @todo Validate response
-
 		return $response['hits']['hits'];
 	}
 

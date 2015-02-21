@@ -3,14 +3,12 @@
 use App\Documentation;
 use Elasticsearch\Client;
 use Elasticsearch\Common\Exceptions\BadRequest400Exception;
+use Exception;
 use Illuminate\Filesystem\Filesystem;
 use ParsedownExtra;
 
-/**
- * @todo Separate this into an indexer and a searcher
- */
-class Indexer {
-
+class Indexer
+{
 	/**
 	 * @var Client
 	 */
@@ -119,6 +117,7 @@ class Indexer {
 	/**
 	 * Get the ElasticSearch index name for this version
 	 *
+	 * @todo Duplicated to Searcher; fix
 	 * @param $version
 	 * @return string
 	 */
@@ -148,7 +147,7 @@ class Indexer {
 	/**
 	 * @param  string $path
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	private function getFileContents($path)
 	{
@@ -159,13 +158,13 @@ class Indexer {
 
 	/**
 	 * @param  string $path
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	private function verifyFileExists($path)
 	{
-		if ( ! file_exists($path))
+		if (! file_exists($path))
 		{
-			throw new \Exception('File does not exist at path: ' . $path);
+			throw new Exception('File does not exist at path: ' . $path);
 		}
 	}
 
@@ -186,18 +185,7 @@ class Indexer {
 	{
 		preg_match_all("/^# (.*)$/m", $markdown, $m);
 
-		if (empty($m[1])) dd($m);
 		return $m[1][0];
-	}
-
-	/**
-	 * @param  string $slug
-	 * @return string
-	 * @throws \Exception If path does not exist
-	 */
-	public function getPathFromSlug($slug)
-	{
-		return $this->docsPath . "/" . $path . ".md";
 	}
 
 	/**
@@ -207,6 +195,7 @@ class Indexer {
 	public function getSlugFromPath($path)
 	{
 		$fileName = last(explode('/', $path));
+
 		return str_replace('.md', '', $fileName);
 	}
 }
