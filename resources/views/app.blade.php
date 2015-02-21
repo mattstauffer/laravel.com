@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Laravel 5</title>
+	<title>Laravel - The PHP Framework For Web Artisans</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="author" content="Taylor Otwell">
 	<meta name="description" content="Laravel - The PHP framework for web artisans.">
@@ -24,7 +24,7 @@
 				<img src="/assets/img/laravel-logo.png" height="30">
 				Laravel
 			</a>
-			
+
 			<div class="responsive-sidebar-nav">
 				<a href="#" class="toggle-slide menu-link btn">&#9776;</a>
 			</div>
@@ -49,5 +49,15 @@
 		<p class="less-significant"><a href="http://jackmcdade.com">Design by Jack McDade</a></p>
 	</footer>
 	<script src="/assets/js/laravel.js"></script>
+	<script src="/assets/js/viewport-units-buggyfill.js"></script>
+	<script>window.viewportUnitsBuggyfill.init();</script>
+    <script>
+        var _gaq=[['_setAccount','UA-23865777-1'],['_trackPageview']];
+        (function(d,t){
+            var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)
+        }(document,'script'));
+    </script>
 </body>
 </html>

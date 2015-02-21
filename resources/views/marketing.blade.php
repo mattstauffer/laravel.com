@@ -23,7 +23,7 @@ home
 <section class="panel statement light">
 	<div class="content">
 		<h1>Love beautiful code? We do too.</h1>
-		<p>The PHP Framework for Web Artisans</p>
+		<p>The PHP Framework For Web Artisans</p>
 		<div class='browser-window'>
 			<div class='top-bar'>
 				<div class='circles'>
@@ -170,23 +170,25 @@ Route::get('/user/{id}', function($id)
 		<div class="forge contain">
 			<img src="/assets/img/forge-macbook.png" alt="Forge Dashboard" class="screenshot">
 			<div class="content">
-				<img src="/assets/img/forge-logo.png" alt="Forge">
+				<a href="https://forge.laravel.com">
+					<img src="/assets/img/forge-logo.png" alt="Forge">
+				</a>
 				<p>Instant PHP Platforms On Linode, DigitalOcean, and more. Push to deploy, PHP 5.6, HHVM, queues, and everything you need to launch and deploy amazing Laravel applications.</p>
 				<p>Launch your application in minutes!</p>
 			</div>
 		</div>
 		<div class="tiles">
 			<div class="tile">
-				<h2>Homestead</h2>
+				<h2><a href="/docs/homestead">Homestead</a></h2>
 				<p>The official Laravel local development environment. Powered by Vagrant, Homestead gets your entire team on the same page with the latest PHP, MySQL, Postgres, Redis, and more.</p>
 			</div>
 			<div class="tile">
-				<h2>Laracasts</h2>
+				<h2><a href="https://laracasts.com">Laracasts</a></h2>
 				<p>Hundreds (yes, hundreds) of Laravel and PHP video tutorials with new videos added every week! Skim the basics or start your journey to Laravel mastery. All for the price of lunch.</p>
 			</div>
 			<div class="tile">
 				<h2>Power Packed</h2>
-				<p>Laravel is amazing out of the box, but there's more to explore! Let <a href="/docs/billing">Cashier</a> makes subscription billing painless, or use <a href="/docs/authentication#social-authentication">Socialite</a> to authenticate with Facebook, Twitter, and more.</p>
+				<p>Laravel is amazing out of the box, but there's more to explore! Let <a href="/docs/billing">Cashier</a> make subscription billing painless, or use <a href="/docs/authentication#social-authentication">Socialite</a> to authenticate with Facebook, Twitter, and more.</p>
 			</div>
 		</div>
 	</section>
