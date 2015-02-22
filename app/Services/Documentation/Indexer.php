@@ -7,8 +7,8 @@ use Exception;
 use Illuminate\Filesystem\Filesystem;
 use ParsedownExtra;
 
-class Indexer
-{
+class Indexer {
+
 	/**
 	 * @var Client
 	 */
@@ -37,10 +37,16 @@ class Indexer
 	}
 
 	/**
-	 * Initialize ElasticSearch Index
+	 * Initialize ElasticSearch Indexes
 	 *
-	 * Not necessary (ElasticSearch will auto create an index if it doesn't exist) *unless*
-	 * it becomes necessary to define parameters--sharding, etc.
+	 * ElasticSearch will automatically create an index if it's added to, even
+	 * if it doesn't exist. However, if you need to customize particular
+	 * parameters for your indexes--for example, how it shards--then you can
+	 * initialize the indexes before you use them.
+	 *
+	 * Since this method isn't doing anything custom at the moment, it's not
+	 * actually necessary until it's updated to pass custom parameters to the
+	 * create() method.
 	 */
 	public function initializeIndexes()
 	{
@@ -57,7 +63,7 @@ class Indexer
 	}
 
 	/**
-	 * Index all docs for all versions
+	 * Index all docs for all versions from local markdown files
 	 */
 	public function indexAllDocuments()
 	{
@@ -111,7 +117,7 @@ class Indexer
 
 		$return = $this->client->index($params);
 
-		echo "Indexed $version.$slug\n";
+		echo "Indexed $version.$slug" . PHP_EOL;
 	}
 
 	/**
