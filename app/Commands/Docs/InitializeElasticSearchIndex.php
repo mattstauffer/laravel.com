@@ -7,13 +7,6 @@ use Illuminate\Contracts\Bus\SelfHandling;
 class InitializeElasticSearchIndexEs extends Command implements SelfHandling {
 
 	/**
-	 * Create a new command instance.
-	 */
-	public function __construct()
-	{
-	}
-
-	/**
 	 * Initializes the indexes for all of our ElasticSearch needs.
 	 *
 	 * An ElasticSearch index is a name of a container, but also some specific preferences about sharding, etc.

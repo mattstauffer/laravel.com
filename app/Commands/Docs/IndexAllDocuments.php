@@ -7,13 +7,6 @@ use Illuminate\Contracts\Bus\SelfHandling;
 class IndexAllDocuments extends Command implements SelfHandling {
 
 	/**
-	 * Create a new command instance.
-	 */
-	public function __construct()
-	{
-	}
-
-	/**
 	 * Index all of our local documentation in ElasticSearch
 	 *
 	 * @param Indexer $indexer
