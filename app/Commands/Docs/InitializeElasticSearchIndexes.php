@@ -4,7 +4,7 @@ use App\Commands\Command;
 use App\Services\Documentation\Indexer;
 use Illuminate\Contracts\Bus\SelfHandling;
 
-class InitializeElasticSearchIndexEs extends Command implements SelfHandling {
+class InitializeElasticSearchIndexes extends Command implements SelfHandling {
 
 	/**
 	 * Initializes the indexes for all of our ElasticSearch needs.
