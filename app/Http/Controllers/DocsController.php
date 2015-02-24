@@ -95,6 +95,7 @@ class DocsController extends Controller {
 			'content' => $content,
 			'currentVersion' => $version,
 			'versions' => $this->getDocVersions(),
+			'keyword' => $keyword,
 		]);
 	}
 
