@@ -964,8 +964,20 @@ $(function() {
 
   // gheading links
   $('.docs-wrapper').find('a[name]').each(function () {
-        var anchor = $('<a href="#' + this.name + '">');
-        $(this).parent().next('h2').wrapInner(anchor);
-    })
+      var anchor = $('<a href="#' + this.name + '">');
+      $(this).parent().next('h2').wrapInner(anchor);
+  });
+
+  // Selects the search area when pressing /
+  $(document).on("keypress", function (e) {
+    // We don't want to select the search box if we are in an input
+    if ($(e.target).closest("input")[0]) {
+        return;
+    }
+    if (e.which === 47) {
+      $('.searchbox').select();
+      e.preventDefault();
+    }
+  });
 
 });
