@@ -88,9 +88,6 @@ class DocsController extends Controller {
 		$content = view('partials.search-results', [
 			'hits' => $hits,
 			'keyword' => $keyword,
-			'totalScore' => array_reduce($hits, function($carry, $item) {
-				return $carry + $item['_score'];
-			})
 		]);
 
 		return view('docs', [
