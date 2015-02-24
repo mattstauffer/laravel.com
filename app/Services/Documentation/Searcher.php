@@ -24,19 +24,38 @@ class Searcher
 	 */
 	public function searchForTerm($version, $term)
 	{
+
 		$params['index'] = $this->getIndexName($version);
 		$params['type'] = 'page';
+
 
 		$params['body']['query']['multi_match']['query'] = $term;
 		$params['body']['query']['multi_match']['fields'] = [
 			"title^3", // Boost title's importance by 3
 			"body.md"
 		];
-
+		$params['body']['highlight']['pre_tags'] = ["<mark>"];
+		$params['body']['highlight']['post_tags'] = ["</mark>"];
+		$params['body']['highlight']['fields']['body.html'] = [
+			"number_of_fragments" => 4
+		];
+			
 		try {
 			$response = $this->client->search($params);
 		} catch (Missing404Exception $e) {
 			throw new \Exception('ElasticSearch Index was not initialized.');
+		}
+
+		// hacky temp crap
+		foreach ($response['hits']['hits'] as &$hit) {
+			foreach ($hit['highlight']['body.html'] as &$fragment) {
+				$fragment = str_replace('<mark>', '***{', $fragment);
+				$fragment = str_replace('</mark>', '}***', $fragment);
+				$fragment = strip_tags($fragment);
+				$fragment = str_replace('***{', '<mark>', $fragment);
+				$fragment = str_replace('}***', '</mark>', $fragment);
+
+			}
 		}
 
 		// @todo Validate response
