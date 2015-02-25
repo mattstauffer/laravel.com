@@ -101,7 +101,7 @@ class Indexer {
 		$markdown = $this->getFileContents($path);
 		$title = $this->extractTitleFromMarkdown($markdown);
 		$html = $this->convertMarkdownToHtml($markdown);
-		$plain = $this->convertMarkdownToPlain($markdown);
+		$highlighting = $this->convertMarkdownForHighlighting($markdown);
 
 		$params['index'] = $this->getIndexName($version);
 		$params['body'] = [
@@ -109,7 +109,7 @@ class Indexer {
 			'title' => $title,
 			'body.md' => $markdown,
 			'body.html' => $html,
-			'body.plain' => $plain
+			'body.highlighting' => $highlighting
 		];
 		$params['type'] = 'page';
 		$params['id'] = $this->generateDocIdFromSlug($slug);
@@ -120,25 +120,42 @@ class Indexer {
 	}
 
 	/**
-	 * Convert a Markdown file to its plain (ready for being highlighted in search results) representation
+	 * Convert a Markdown file to an HTML-less version, ready for being highlighted in search results
 	 *
 	 * @param $markdown
 	 * @return string
 	 */
-	private function convertMarkdownToPlain($markdown)
+	private function convertMarkdownForHighlighting($markdown)
 	{
 		// In the current structure of the documentation, it starts with a title, then table of contents,
 		// and then the first real content is the first section's marker: e.g. <a name="introduction"></a>
 		// So, the hacky way of stripping out the title and the TOC is to just delete everything
 		// up to the first instance of <a
 
+		// Strip title and TOC
 		$content = substr($markdown, strpos($markdown, '<a'));
 
-		$content = $this->convertMarkdownToHtml($content);
+		// Drop code blocks
+		$joined = array_map(function($line) {
+			if (strpos($line, "\t") !== 0) {
+				return $line;
+			}
+		}, explode("\n", $content));
 
+		$content = implode("\n", array_filter($joined));
+
+		// Convert to HTML and then strip tags
+		$content = $this->convertMarkdownToHtml($content);
 		$content = strip_tags($content);
 
-		return strip_tags($content);
+		// Catch anything we missed on strip_tags
+		$content = str_replace([
+			'&quot;'
+		], [
+			'"'
+		], $content);
+
+		return $content;
 	}
 
 	/**

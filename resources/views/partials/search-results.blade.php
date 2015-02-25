@@ -22,7 +22,7 @@
 		margin-right: 0.25em;
 	}
 	.search-line-break {
-		color: #ccc;
+		color: #eee;
 		margin-left: 0.35em;
 		margin-right: 0.35em;
 	}
@@ -34,10 +34,11 @@
 		@foreach ($hits as $hit)
 			<li><a href="{{ url('docs/' . $hit['_source']['slug']) }}/">{{ $hit['_source']['title'] }}</a><br>
 				@if (array_key_exists('highlight', $hit))
-					@foreach ($hit['highlight']['body.plain'] as $fragment)
+					@foreach ($hit['highlight']['body.highlighting'] as $fragment)
 						{{-- @todo fix the ... to only apply when appropriate. Also fix this hacky display crap. --}}
 						<span class="search-ellipses">...</span>{!! str_replace("\n", "<span class='search-line-break'>|</span>", trim(str_replace("\n\n", "\n", str_replace("\n\n", "\n", $fragment)))) !!}
-					@endforeach<span class="search-ellipses">...</span>
+					@endforeach
+					<span class="search-ellipses">...</span>
 				@endif
 			</li>
 		@endforeach

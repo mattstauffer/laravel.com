@@ -34,7 +34,7 @@ class Searcher
 		];
 		$params['body']['highlight']['pre_tags'] = ["<mark>"];
 		$params['body']['highlight']['post_tags'] = ["</mark>"];
-		$params['body']['highlight']['fields']['body.plain'] = [
+		$params['body']['highlight']['fields']['body.highlighting'] = [
 			"number_of_fragments" => 2,
 			"fragment_size" => 120
 		];
