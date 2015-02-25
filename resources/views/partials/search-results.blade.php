@@ -12,6 +12,7 @@
 		}
 
 		.search-results li a {
+			font-size: 1.25em;
 			font-weight: bold;
 			text-decoration: none;
 		}
