@@ -24,7 +24,6 @@ class Searcher
 	 */
 	public function searchForTerm($version, $term)
 	{
-
 		$params['index'] = $this->getIndexName($version);
 		$params['type'] = 'page';
 
@@ -36,7 +35,7 @@ class Searcher
 		];
 		$params['body']['highlight']['pre_tags'] = ["<mark>"];
 		$params['body']['highlight']['post_tags'] = ["</mark>"];
-		$params['body']['highlight']['fields']['body.html'] = [
+		$params['body']['highlight']['fields']['body.plain'] = [
 			"number_of_fragments" => 4
 		];
 			
@@ -48,7 +47,7 @@ class Searcher
 
 		// hacky temp crap
 		foreach ($response['hits']['hits'] as &$hit) {
-			foreach ($hit['highlight']['body.html'] as &$fragment) {
+			foreach ($hit['highlight']['body.plain'] as &$fragment) {
 				$fragment = str_replace('<mark>', '***{', $fragment);
 				$fragment = str_replace('</mark>', '}***', $fragment);
 				$fragment = strip_tags($fragment);

@@ -54,7 +54,7 @@ class Indexer {
 		{
 			try {
 				$this->client->indices()->create([
-					'index' => $this->getIndexName($versionKey)
+					'index' => $this->getIndexName($versionKey),
 				]);
 			} catch (BadRequest400Exception $e) {
 				// Cool, we already have that index. Still want to create the others...
@@ -111,6 +111,7 @@ class Indexer {
 			'title' => $title,
 			'body.html' => $html,
 			'body.md' => $markdown,
+			'body.plain' => strip_tags($html)
 		];
 		$params['type'] = 'page';
 		$params['id'] = $this->generateDocIdFromSlug($slug);

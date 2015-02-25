@@ -15,6 +15,6 @@ class InitializeElasticSearchIndexes extends Command implements SelfHandling {
 	 */
 	public function handle(Indexer $indexer)
 	{
-		$indexer->initializeIndex();
+		$indexer->initializeIndexes();
 	}
 }
