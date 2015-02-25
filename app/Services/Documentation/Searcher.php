@@ -16,7 +16,6 @@ class Searcher
 	}
 
 	/**
-	 * @todo Make the search smarter--for example, care more about h2s, h3s, etc.
 	 * @param  string $version
 	 * @param  string $term
 	 * @return array
@@ -36,25 +35,14 @@ class Searcher
 		$params['body']['highlight']['pre_tags'] = ["<mark>"];
 		$params['body']['highlight']['post_tags'] = ["</mark>"];
 		$params['body']['highlight']['fields']['body.plain'] = [
-			"number_of_fragments" => 4
+			"number_of_fragments" => 2,
+			"fragment_size" => 120
 		];
 			
 		try {
 			$response = $this->client->search($params);
 		} catch (Missing404Exception $e) {
 			throw new \Exception('ElasticSearch Index was not initialized.');
-		}
-
-		// hacky temp crap
-		foreach ($response['hits']['hits'] as &$hit) {
-			foreach ($hit['highlight']['body.plain'] as &$fragment) {
-				$fragment = str_replace('<mark>', '***{', $fragment);
-				$fragment = str_replace('</mark>', '}***', $fragment);
-				$fragment = strip_tags($fragment);
-				$fragment = str_replace('***{', '<mark>', $fragment);
-				$fragment = str_replace('}***', '</mark>', $fragment);
-
-			}
 		}
 
 		// @todo Validate response

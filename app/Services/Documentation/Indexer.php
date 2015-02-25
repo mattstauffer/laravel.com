@@ -92,9 +92,6 @@ class Indexer {
 	/**
 	 * Index a given document in ElasticSearch
 	 *
-	 * @todo Split up the document into h2/h3-split sections and index individually
-	 * for better split of the search
-	 *
 	 * @param string $version
 	 * @param string $path
 	 */
@@ -102,16 +99,17 @@ class Indexer {
 	{
 		$slug = $this->getSlugFromPath($path);
 		$markdown = $this->getFileContents($path);
-		$html = $this->convertMarkdownToHtml($markdown);
 		$title = $this->extractTitleFromMarkdown($markdown);
+		$html = $this->convertMarkdownToHtml($markdown);
+		$plain = $this->convertMarkdownToPlain($markdown);
 
 		$params['index'] = $this->getIndexName($version);
 		$params['body'] = [
 			'slug' => $slug,
 			'title' => $title,
-			'body.html' => $html,
 			'body.md' => $markdown,
-			'body.plain' => strip_tags($html)
+			'body.html' => $html,
+			'body.plain' => $plain
 		];
 		$params['type'] = 'page';
 		$params['id'] = $this->generateDocIdFromSlug($slug);
@@ -119,6 +117,28 @@ class Indexer {
 		$return = $this->client->index($params);
 
 		echo "Indexed $version.$slug" . PHP_EOL;
+	}
+
+	/**
+	 * Convert a Markdown file to its plain (ready for being highlighted in search results) representation
+	 *
+	 * @param $markdown
+	 * @return string
+	 */
+	private function convertMarkdownToPlain($markdown)
+	{
+		// In the current structure of the documentation, it starts with a title, then table of contents,
+		// and then the first real content is the first section's marker: e.g. <a name="introduction"></a>
+		// So, the hacky way of stripping out the title and the TOC is to just delete everything
+		// up to the first instance of <a
+
+		$content = substr($markdown, strpos($markdown, '<a'));
+
+		$content = $this->convertMarkdownToHtml($content);
+
+		$content = strip_tags($content);
+
+		return strip_tags($content);
 	}
 
 	/**
