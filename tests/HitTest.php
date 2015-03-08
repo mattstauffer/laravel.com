@@ -19,6 +19,11 @@ class HitTest extends TestCase {
 		return include(__DIR__ . '/stubs/swiftmailerHit.php');
 	}
 
+	private function stubMailRecipients()
+	{
+		return include(__DIR__ . '/stubs/mailRecipientsHit.php');
+	}
+
 	public function test_it_returns_title()
 	{
 		$array = $this->stubPlain();
@@ -58,8 +63,13 @@ class HitTest extends TestCase {
 
 	public function test_it_adds_ellipsis_if_fragment_is_not_beginning_of_body()
 	{
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
+		$array = $this->stubMailRecipients();
+
+		$hit = new Hit($array);
+
+		$this->assertEquals(
+			'<span class="search-ellipsis">...</span><mark>recipients</mark>. This is primarily useful for quick, local debugging and content verification.<span class=\'search-line-break\'>|</span>Basic Usage<span class=\'search-line-break\'>|</span>The Mail::send method may<span class="search-ellipsis">...</span>',
+			$hit->fragments()
 		);
 	}
 
@@ -77,8 +87,13 @@ class HitTest extends TestCase {
 
 	public function test_it_adds_ellipsis_if_fragment_is_not_end_of_body()
 	{
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
+		$array = $this->stubMailRecipients();
+
+		$hit = new Hit($array);
+
+		$this->assertEquals(
+			'<span class="search-ellipsis">...</span><mark>recipients</mark>. This is primarily useful for quick, local debugging and content verification.<span class=\'search-line-break\'>|</span>Basic Usage<span class=\'search-line-break\'>|</span>The Mail::send method may<span class="search-ellipsis">...</span>',
+			$hit->fragments()
 		);
 	}
 

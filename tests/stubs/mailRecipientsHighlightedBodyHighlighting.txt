@@ -1,0 +1,4 @@
+ <mark>recipients</mark>. This is primarily useful for quick, local debugging and content verification.
+
+Basic Usage
+The Mail::send method may
