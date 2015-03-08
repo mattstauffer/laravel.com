@@ -67,20 +67,20 @@ class HitTest extends TestCase {
 
 		$hit = new Hit($array);
 
-		$this->assertEquals(
-			'<span class="search-ellipsis">...</span><mark>recipients</mark>. This is primarily useful for quick, local debugging and content verification.<span class=\'search-line-break\'>|</span>Basic Usage<span class=\'search-line-break\'>|</span>The Mail::send method may<span class="search-ellipsis">...</span>',
+		$this->assertStringStartsWith(
+			$hit->ellipsis,
 			$hit->fragments()
 		);
 	}
 
-	public function test_it_does_not_add_ellipsis_if_fragment_is_not_beginning_of_body()
+	public function test_it_does_not_add_ellipsis_if_fragment_is_beginning_of_body()
 	{
 		$array = $this->stubSwiftmailer();
 
 		$hit = new Hit($array);
 
-		$this->assertEquals(
-			'Configuration<span class=\'search-line-break\'>|</span>Laravel provides a clean, simple API over the popular <mark>SwiftMailer</mark> library. The mail configuration file<span class="search-ellipsis">...</span>',
+		$this->assertStringStartsNotWith(
+			$hit->ellipsis,
 			$hit->fragments()
 		);
 	}
@@ -91,8 +91,8 @@ class HitTest extends TestCase {
 
 		$hit = new Hit($array);
 
-		$this->assertEquals(
-			'<span class="search-ellipsis">...</span><mark>recipients</mark>. This is primarily useful for quick, local debugging and content verification.<span class=\'search-line-break\'>|</span>Basic Usage<span class=\'search-line-break\'>|</span>The Mail::send method may<span class="search-ellipsis">...</span>',
+		$this->assertStringEndsWith(
+			$hit->ellipsis,
 			$hit->fragments()
 		);
 	}
@@ -103,8 +103,8 @@ class HitTest extends TestCase {
 
 		$hit = new Hit($array);
 
-		$this->assertEquals(
-			'<span class="search-ellipsis">...</span>files instead of being sent to the recipient.<span class=\'search-line-break\'>|</span>If you would like to actually view the test e-mails, consider using a service like <mark>MailTrap</mark>.',
+		$this->assertStringEndsNotWith(
+			$hit->ellipsis,
 			$hit->fragments()
 		);
 	}

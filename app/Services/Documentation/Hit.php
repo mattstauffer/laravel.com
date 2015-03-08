@@ -12,7 +12,7 @@ class Hit
 	private $bodyHighlighting;
 	private $bodyHtml;
 
-	private $ellipsis = '<span class="search-ellipsis">...</span>';
+	public $ellipsis = '<span class="search-ellipsis">...</span>';
 
 	public function __construct(array $hit)
 	{
