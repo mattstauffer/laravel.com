@@ -12,7 +12,7 @@ class Hit
 	private $bodyHighlighting;
 	private $bodyHtml;
 
-	private $ellipses = '<span class="search-ellipses">...</span>';
+	private $ellipsis = '<span class="search-ellipsis">...</span>';
 
 	public function __construct(array $hit)
 	{
@@ -51,7 +51,7 @@ class Hit
 		foreach ($this->highlight['body.highlighting'] as $i => $fragment)
 		{
 			if ($i !== 0 || ! $this->fragmentAtBeginningOfBody($fragment)) {
-				$return .= $this->ellipses;
+				$return .= $this->ellipsis;
 			}
 
 			$return .= $this->formatFragment($fragment);
@@ -59,7 +59,7 @@ class Hit
 
 		if (! $this->fragmentAtEndOfBody(end($this->highlight['body.highlighting'])))
 		{
-			$return = $return . $this->ellipses;
+			$return = $return . $this->ellipsis;
 		}
 
 		return $return;
@@ -70,7 +70,7 @@ class Hit
 	 *
 	 * @return bool
 	 */
-	private function hasHighlight()
+	public function hasHighlight()
 	{
 		return ! empty($this->highlight);
 	}
@@ -79,7 +79,7 @@ class Hit
 	 * Format a fragment to be displayed in a search listing
 	 *
 	 * Converts longer line breaks to a single line break and replaces with a stylized |;
-	 * prepends ellipses if appropriate
+	 * prepends ellipsis if appropriate
 	 *
 	 * @param $fragment
 	 * @return mixed|string

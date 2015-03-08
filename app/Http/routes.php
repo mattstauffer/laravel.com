@@ -14,13 +14,18 @@
 /**
  * Set the default documentation version...
  */
-define('DEFAULT_VERSION', '5.0');
+if (! defined('DEFAULT_VERSION')) {
+	define('DEFAULT_VERSION', '5.0');
+}
 
 /**
  * Convert some text to Markdown...
  */
-function markdown($text) {
-	return (new ParsedownExtra)->text($text);
+if (! function_exists('markdown')) {
+	function markdown($text)
+	{
+		return (new ParsedownExtra)->text($text);
+	}
 }
 
 get('/', function() {
