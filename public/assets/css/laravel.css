@@ -1571,3 +1571,25 @@ body.the-404 .contain {
   body.the-404 .contain .content, body.the-404 .contain .media {
     display: table-cell;
     vertical-align: middle; }
+
+.search-results {
+  list-style-type: none;
+  padding-left: 0; }
+  .search-results li {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1em;
+    padding-bottom: 1em; }
+    .search-results li a {
+      font-size: 1.25em;
+      font-weight: bold;
+      text-decoration: none; }
+
+.search-ellipses {
+  color: #bbb;
+  margin-left: 0.25em;
+  margin-right: 0.25em; }
+
+.search-line-break {
+  color: #eee;
+  margin-left: 0.35em;
+  margin-right: 0.35em; }

@@ -2,6 +2,7 @@
 
 use Elasticsearch\Client;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
+use Illuminate\Support\Collection;
 
 class Searcher
 {
@@ -45,8 +46,18 @@ class Searcher
 			throw new \Exception('ElasticSearch Index was not initialized.');
 		}
 
-		// @todo Validate response
-		return $response['hits']['hits'];
+		return $this->transformHits($response['hits']['hits']);
+	}
+
+	/**
+	 * @param array $hits
+	 * @return Collection
+	 */
+	private function transformHits($hits)
+	{
+		return new Collection(array_map(function($hit) {
+			return new Hit($hit);
+		}, $hits));
 	}
 
 	/**
