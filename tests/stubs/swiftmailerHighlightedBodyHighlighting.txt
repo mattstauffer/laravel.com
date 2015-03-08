@@ -1,0 +1,3 @@
+
+Configuration
+Laravel provides a clean, simple API over the popular <mark>SwiftMailer</mark> library. The mail configuration file

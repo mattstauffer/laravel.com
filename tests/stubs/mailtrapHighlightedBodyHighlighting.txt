@@ -1,0 +1,2 @@
+ files instead of being sent to the recipient.
+If you would like to actually view the test e-mails, consider using a service like <mark>MailTrap</mark>.
