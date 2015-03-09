@@ -19,8 +19,9 @@ class IndexerTest extends TestCase {
 				'slug' => 'artisan',
 				'title' => 'Artisan CLI',
 				'body.md' => file_get_contents(__DIR__ . '/stubs/indexer/artisan.md'),
-				'body.html' => file_get_contents(__DIR__ . '/stubs/indexer/artisan.html'),
-				'body.highlighting' => file_get_contents(__DIR__ . '/stubs/indexer/artisan.highlighting')
+				// Weirdly, can't get stubs to drop the end line
+				'body.html' => rtrim(file_get_contents(__DIR__ . '/stubs/indexer/artisan.html'), "\n"),
+				'body.highlighting' => rtrim(file_get_contents(__DIR__ . '/stubs/indexer/artisan.highlighting'), "\n")
 			],
 			'type' => 'page',
 			'id' => md5('artisan')
@@ -41,10 +42,6 @@ class IndexerTest extends TestCase {
 
 		$version = 'master';
 		$path = __DIR__ . '/stubs/indexer/artisan.md';
-
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
 
 		$indexer->indexDocument($version, $path);
 	}
