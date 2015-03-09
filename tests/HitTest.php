@@ -4,6 +4,8 @@ use App\Services\Documentation\Hit;
 
 class HitTest extends TestCase {
 
+	private $ellipsis = '<span class="search-ellipsis">...</span>';
+
 	private function stubPlain()
 	{
 		return include(__DIR__ . '/stubs/plainHit.php');
@@ -68,7 +70,7 @@ class HitTest extends TestCase {
 		$hit = new Hit($array);
 
 		$this->assertStringStartsWith(
-			$hit->ellipsis,
+			$this->ellipsis,
 			$hit->fragments()
 		);
 	}
@@ -80,7 +82,7 @@ class HitTest extends TestCase {
 		$hit = new Hit($array);
 
 		$this->assertStringStartsNotWith(
-			$hit->ellipsis,
+			$this->ellipsis,
 			$hit->fragments()
 		);
 	}
@@ -92,7 +94,7 @@ class HitTest extends TestCase {
 		$hit = new Hit($array);
 
 		$this->assertStringEndsWith(
-			$hit->ellipsis,
+			$this->ellipsis,
 			$hit->fragments()
 		);
 	}
@@ -104,7 +106,7 @@ class HitTest extends TestCase {
 		$hit = new Hit($array);
 
 		$this->assertStringEndsNotWith(
-			$hit->ellipsis,
+			$this->ellipsis,
 			$hit->fragments()
 		);
 	}
