@@ -197,7 +197,7 @@ class Indexer {
 	{
 		$this->verifyFileExists($path);
 
-		return file_get_contents($path);
+		return $this->files->get($path);
 	}
 
 	/**
@@ -206,7 +206,7 @@ class Indexer {
 	 */
 	private function verifyFileExists($path)
 	{
-		if (! file_exists($path))
+		if (! $this->files->exists($path))
 		{
 			throw new Exception('File does not exist at path: ' . $path);
 		}

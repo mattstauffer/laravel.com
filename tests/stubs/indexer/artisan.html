@@ -1,0 +1,22 @@
+<h1>Artisan CLI</h1>
+<ul>
+	<li><a href="#introduction">Introduction</a></li>
+	<li><a href="#usage">Usage</a></li>
+</ul>
+<p><a name="introduction"></a></p>
+<h2>Introduction</h2>
+<p>Artisan is the name of the command-line interface included with Laravel. It provides a number of helpful commands for your use while developing your application. It is driven by the powerful Symfony Console component.</p>
+<p><a name="usage"></a></p>
+<h2>Usage</h2>
+<h4>Listing All Available Commands</h4>
+<p>To view a list of all available Artisan commands, you may use the <code>list</code> command:</p>
+<pre><code>php artisan list</code></pre>
+<h4>Viewing The Help Screen For A Command</h4>
+<p>Every command also includes a &quot;help&quot; screen which displays and describes the command's available arguments and options. To view a help screen, simply precede the name of the command with <code>help</code>:</p>
+<pre><code>php artisan help migrate</code></pre>
+<h4>Specifying The Configuration Environment</h4>
+<p>You may specify the configuration environment that should be used while running a command using the <code>--env</code> switch:</p>
+<pre><code>php artisan migrate --env=local</code></pre>
+<h4>Displaying Your Current Laravel Version</h4>
+<p>You may also view the current version of your Laravel installation using the <code>--version</code> option:</p>
+<pre><code>php artisan --version</code></pre>

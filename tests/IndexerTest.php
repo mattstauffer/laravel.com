@@ -1,44 +1,73 @@
 <?php
 
 use App\Services\Documentation\Hit;
+use App\Services\Documentation\Indexer;
+use Mockery as M;
 
 class IndexerTest extends TestCase {
 
-	private $correctParams = [
-		'index' => '',
-		'body' => [
-			'slug' => '',
-			'title' => '',
-			'body.md' => '',
-			'body.html' => '',
-			'body.highlighting' => ''
-		],
-		'type' => 'page',
-		'id' => ''
-	];
+	public function tearDown()
+	{
+		m::close();
+	}
+
+	private function correctParams()
+	{
+		return [
+			'index' => 'docs.master',
+			'body' => [
+				'slug' => 'artisan',
+				'title' => 'Artisan CLI',
+				'body.md' => file_get_contents(__DIR__ . '/stubs/indexer/artisan.md'),
+				'body.html' => file_get_contents(__DIR__ . '/stubs/indexer/artisan.html'),
+				'body.highlighting' => file_get_contents(__DIR__ . '/stubs/indexer/artisan.highlighting')
+			],
+			'type' => 'page',
+			'id' => md5('artisan')
+		];
+	}
 
 	public function test_it_creates_indexing_params_array_correctly()
 	{
-		$version = 'master';
-		$path = '/home/vagrant/code/laravel.com/resources/docs/master/artisan.md';
+		$client = M::mock('Elasticsearch\Client');
+		$client->shouldReceive('index')
+			->with($this->correctParams())
+			->once();
 
-//		$client = M::mock('Elasticsearch\Client');
 		$markdown = new ParsedownExtra;
 		$filesystem = app('Illuminate\Filesystem\Filesystem');
 
-//		$indexer = new \App\Services\Documentation\Indexer($client, $markdown, $filesystem);
+		$indexer = new Indexer($client, $markdown, $filesystem);
+
+		$version = 'master';
+		$path = __DIR__ . '/stubs/indexer/artisan.md';
 
 		$this->markTestIncomplete(
 			'This test has not been implemented yet.'
 		);
+
+		$indexer->indexDocument($version, $path);
 	}
 
 	public function test_it_converts_markdown_for_highlighting_correctly()
 	{
-
-
 		$this->markTestIncomplete(
 			'This test has not been implemented yet.'
 		);
 	}
+
+	public function test_it_converts_slug_from_path_correctly()
+	{
+		$client = M::mock('Elasticsearch\Client');
+		$markdown = new ParsedownExtra;
+		$filesystem = app('Illuminate\Filesystem\Filesystem');
+
+		$indexer = new Indexer($client, $markdown, $filesystem);
+
+		$this->assertEquals(
+			'artisan',
+			$indexer->getSlugFromPath('/home/code/laravel.com/resource/docs/master/artisan.md')
+		);
+	}
+
 }
